@@ -22,8 +22,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onUserMove(userMove: Int) {
-        val winner = winner(userMove, computerMove())
+        val computerMove = computerMove()
+        val winner = winner(userMove, computerMove)
         Toast.makeText(this, "The winner is: $winner", Toast.LENGTH_SHORT).show()
+
+        updateView(userMove, computerMove)
     }
 
     private fun computerMove(): Int {
@@ -38,6 +41,20 @@ class MainActivity : AppCompatActivity() {
             1 -> if (computerMove == 2) {"computer"} else "user"
             2 -> if (computerMove == 0) {"computer"} else "user"
             else -> "IMPOSSIBLE!!!"
+        }
+    }
+
+    private fun updateView(userMove: Int, computerMove: Int) {
+        when(userMove) {
+            0 -> ivUserMove.setImageResource(R.drawable.rock)
+            1 -> ivUserMove.setImageResource(R.drawable.paper)
+            2 -> ivUserMove.setImageResource(R.drawable.scissors)
+        }
+
+        when(computerMove) {
+            0 -> ivComputerMove.setImageResource(R.drawable.rock)
+            1 -> ivComputerMove.setImageResource(R.drawable.paper)
+            2 -> ivComputerMove.setImageResource(R.drawable.scissors)
         }
     }
 }
