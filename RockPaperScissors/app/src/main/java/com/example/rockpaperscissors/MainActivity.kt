@@ -1,7 +1,10 @@
 package com.example.rockpaperscissors
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlin.random.Random
@@ -56,5 +59,25 @@ class MainActivity : AppCompatActivity() {
             1 -> ivComputerMove.setImageResource(R.drawable.paper)
             2 -> ivComputerMove.setImageResource(R.drawable.scissors)
         }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_main, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        startHistoryActivity()
+
+        return when (item.itemId) {
+            R.id.action_history -> true
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    private fun startHistoryActivity() {  // Super uitgebreid in andere opdrachten, maar hier alleen om te switchen naar history. Er hoeft niets worden opgeslagen ofzo.
+        val intent = Intent(this, HistoryActivity::class.java)
+        startActivity(intent)
     }
 }

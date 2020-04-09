@@ -1,14 +1,21 @@
 <resources>
     <string name="app_name">Rock Paper Scissors</string>
 
+    <!--  Instructions  -->
     <string name="tvWelcome">Welcome</string>
     <string name="tvInstructions">Choose rock, paper or scissors. Defeat your phone!</string>
 
+    <!--  Statistics  -->
     <string name="tvStatsText">Your all time statistics:</string>
     <string name="tvStats">Win: %s Lose: %s1 Draw: %s2</string>
     <string name="tvResult">You %s!</string>
     <string name="tvVersus">V.S</string>
 
+    <!--  Current moves  -->
     <string name="tvComputerMove">Computer</string>
     <string name="tvUserMove">You</string>
+
+    <!--  Menu  -->
+    <string name="action_history">Game history</string>
+
 </resources>
