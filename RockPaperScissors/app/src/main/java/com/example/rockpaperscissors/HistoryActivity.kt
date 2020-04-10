@@ -1,7 +1,9 @@
 package com.example.rockpaperscissors
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.rockpaperscissors.db.GameRepository
@@ -17,7 +19,6 @@ class HistoryActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var viewAdapter: RecyclerView.Adapter<*>
     private lateinit var viewManager: RecyclerView.LayoutManager
-
     private lateinit var gameRepository: GameRepository
 
     var games = arrayListOf<Game>()
@@ -26,6 +27,7 @@ class HistoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_history)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true) // Enable up button
 
         viewManager = LinearLayoutManager(this)
         viewAdapter = GameAdapter(games)
@@ -45,7 +47,7 @@ class HistoryActivity : AppCompatActivity() {
         getGamesFromDB()
     }
 
-    private fun getGamesFromDB() {  // For filling AND updating rv
+    private fun getGamesFromDB() {  // Updates rv with all db entries
         CoroutineScope(Dispatchers.Main).launch {
             val games = withContext(Dispatchers.IO) {
                 gameRepository.getAllGames()
@@ -54,5 +56,30 @@ class HistoryActivity : AppCompatActivity() {
             this@HistoryActivity.games.addAll(games)
             viewAdapter.notifyDataSetChanged()
         }
+    }
+
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_history, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                gameRepository.deleteAllProducts()
+            }
+            getGamesFromDB()
+        }
+
+        return when (item.itemId) {
+            R.id.menuDeleteHistory -> true
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {  // Makes back button work!
+        finish()
+        return true
     }
 }

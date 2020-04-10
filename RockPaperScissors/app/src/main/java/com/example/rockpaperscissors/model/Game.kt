@@ -16,10 +16,10 @@ data class Game(
     @ColumnInfo(name = "winner")  // Loser veld overbodig. > Als geen winner = draw. Als winner = andere loser.
     val winnerText: String,
     @ColumnInfo(name = "date")
-    val date: Date,
+    val dateText: String,
 
     @ColumnInfo(name = "userMove")
-    val userMove: String,
+    val userMove: Int,
     @ColumnInfo(name = "computerMove")
-    val computerMove: String
+    val computerMove: Int
     ) : Parcelable

@@ -6,15 +6,26 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
+import com.example.rockpaperscissors.db.GameRepository
+import com.example.rockpaperscissors.model.Game
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
+    private lateinit var gameRepository: GameRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
+
+        gameRepository = GameRepository(this)
 
         initViews()
     }
@@ -32,7 +43,18 @@ class MainActivity : AppCompatActivity() {
 
         updateView(userMove, computerMove)
 
-        // TODO: Save game to DB
+        val game = Game(
+            winnerText = winner,
+            dateText = currentDateString(),
+            userMove = userMove,
+            computerMove = computerMove
+        )
+
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                gameRepository.insertGame(game)
+            }
+        }
     }
 
     private fun computerMove(): Int {
@@ -79,8 +101,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun startHistoryActivity() {  // Super uitgebreid in andere opdrachten, maar hier alleen om te switchen naar history. Er hoeft niets worden opgeslagen ofzo.
+    private fun startHistoryActivity() {
         val intent = Intent(this, HistoryActivity::class.java)
         startActivity(intent)
+    }
+
+
+    private fun currentDateString(): String {
+        val date = Date()
+        val formatter = SimpleDateFormat("MMM dd yyyy HH:mma")
+        return formatter.format(date)
     }
 }

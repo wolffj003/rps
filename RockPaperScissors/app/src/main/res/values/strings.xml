@@ -15,8 +15,9 @@
     <string name="tvComputerMove">Computer</string>
     <string name="tvUserMove">You</string>
 
-    <!--  Menu  -->
+    <!--  Menus  -->
     <string name="action_history">Game history</string>
+    <string name="action_delete_history">Delete game history</string>
 
     <!--  Cardviews  -->
     <string name="cvtvResult">Winner: %s</string>
