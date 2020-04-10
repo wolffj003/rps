@@ -11,6 +11,7 @@ import kotlin.random.Random
 
 class MainActivity : AppCompatActivity() {
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -30,6 +31,8 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "The winner is: $winner", Toast.LENGTH_SHORT).show()
 
         updateView(userMove, computerMove)
+
+        // TODO: Save game to DB
     }
 
     private fun computerMove(): Int {

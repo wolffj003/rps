@@ -66,9 +66,10 @@
         android:id="@+id/tvComputerMove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/tvComputerMove"
-        app:layout_constraintEnd_toStartOf="@+id/tvVersus"
+        app:layout_constraintEnd_toEndOf="@+id/ivComputerMove"
+        app:layout_constraintStart_toStartOf="@+id/ivComputerMove"
         app:layout_constraintTop_toBottomOf="@+id/ivComputerMove" />
 
 
@@ -100,9 +101,10 @@
         android:id="@+id/tvUserMove"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginTop="8dp"
         android:text="@string/tvUserMove"
-        app:layout_constraintStart_toEndOf="@+id/tvVersus"
+        app:layout_constraintEnd_toEndOf="@+id/ivUserMove"
+        app:layout_constraintStart_toStartOf="@+id/ivUserMove"
         app:layout_constraintTop_toBottomOf="@+id/ivUserMove" />
 
     <androidx.appcompat.widget.AppCompatImageButton

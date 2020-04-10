@@ -18,4 +18,9 @@
     <!--  Menu  -->
     <string name="action_history">Game history</string>
 
+    <!--  Cardviews  -->
+    <string name="cvtvResult">Winner: %s</string>
+    <string name="cvtvDate">DATE</string>
+
+
 </resources>
