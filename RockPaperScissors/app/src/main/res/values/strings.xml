@@ -7,9 +7,14 @@
 
     <!--  Statistics  -->
     <string name="tvStatsText">Your all time statistics:</string>
-    <string name="tvStats">Win: %s Lose: %s1 Draw: %s2</string>
+    <string name="tvStats">Win: %1$d Lose: %2$d Draw: %3$d</string>
     <string name="tvResult">You %s!</string>
     <string name="tvVersus">V.S</string>
+
+    <!--  Game states  -->
+    <string name="userWon">You won!</string>
+    <string name="userLost">You lost!</string>
+    <string name="draw">The game was a draw…</string>
 
     <!--  Current moves  -->
     <string name="tvComputerMove">Computer</string>
@@ -23,5 +28,8 @@
     <string name="cvtvResult">Winner: %s</string>
     <string name="cvtvDate">DATE</string>
 
+    <!--  Toasts  -->
+    <string name="tstWinner">The winner was: %1$s!</string>
+    <string name="tstDraw">The game was a draw!</string>
 
 </resources>

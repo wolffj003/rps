@@ -21,7 +21,7 @@ class HistoryActivity : AppCompatActivity() {
     private lateinit var viewManager: RecyclerView.LayoutManager
     private lateinit var gameRepository: GameRepository
 
-    var games = arrayListOf<Game>()
+    private var games = arrayListOf<Game>()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -65,11 +65,8 @@ class HistoryActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) {
-                gameRepository.deleteAllProducts()
-            }
-            getGamesFromDB()
+        when(item.itemId) {
+            R.id.menuDeleteHistory -> deleteHistory()
         }
 
         return when (item.itemId) {
@@ -78,7 +75,16 @@ class HistoryActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {  // Makes back button work!
+    private fun deleteHistory() {
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                gameRepository.deleteAllProducts()
+            }
+            getGamesFromDB()
+        }
+    }
+
+    override fun onSupportNavigateUp(): Boolean {  // Makes back button work! TODO: Fix back button clearing database.
         finish()
         return true
     }

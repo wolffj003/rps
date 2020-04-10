@@ -13,8 +13,12 @@ data class Game(
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "id")
     var id: Long? = null,
-    @ColumnInfo(name = "winner")  // Loser veld overbodig. > Als geen winner = draw. Als winner = andere loser.
-    val winnerText: String,
+
+    @ColumnInfo(name = "winner")
+    var winner: String,
+
+    @ColumnInfo(name = "result")
+    val resultText: String,
     @ColumnInfo(name = "date")
     val dateText: String,
 

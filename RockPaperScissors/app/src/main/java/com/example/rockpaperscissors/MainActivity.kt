@@ -34,27 +34,50 @@ class MainActivity : AppCompatActivity() {
         btnRock.setOnClickListener{ onUserMove(0) }
         btnPaper.setOnClickListener{ onUserMove(1) }
         btnScissors.setOnClickListener{ onUserMove(2) }
+
+        updateStats()
     }
 
     private fun onUserMove(userMove: Int) {
         val computerMove = computerMove()
         val winner = winner(userMove, computerMove)
-        Toast.makeText(this, "The winner is: $winner", Toast.LENGTH_SHORT).show()
 
-        updateView(userMove, computerMove)
+        var userWon: Boolean? = false
+        var resultText =  "Beep boop: ERROR"
+        when(winner){
+            "draw"      -> {
+                resultText = getString(R.string.tstDraw)
+                userWon = null
+            }
+            "user"      -> {
+                resultText = getString(R.string.tstWinner, getString(R.string.tvUserMove))
+                userWon = true
+            }
+            "computer"  -> {
+                resultText = getString(R.string.tstWinner, getString(R.string.tvComputerMove))
+                userWon = false
+            }
+        }
+
+        val gameResult = when(userWon) {
+            null -> getString(R.string.draw)
+            true -> getString(R.string.userWon)
+            false -> getString(R.string.userLost)
+        }
+
+        tvResult.text = gameResult
+        Toast.makeText(this, resultText, Toast.LENGTH_SHORT).show()
 
         val game = Game(
-            winnerText = winner,
+            winner = winner,
+            resultText = resultText,
             dateText = currentDateString(),
             userMove = userMove,
             computerMove = computerMove
         )
 
-        CoroutineScope(Dispatchers.Main).launch {
-            withContext(Dispatchers.IO) {
-                gameRepository.insertGame(game)
-            }
-        }
+        saveToDB(game)
+        updateView(userMove, computerMove)
     }
 
     private fun computerMove(): Int {
@@ -83,6 +106,37 @@ class MainActivity : AppCompatActivity() {
             0 -> ivComputerMove.setImageResource(R.drawable.rock)
             1 -> ivComputerMove.setImageResource(R.drawable.paper)
             2 -> ivComputerMove.setImageResource(R.drawable.scissors)
+        }
+
+        updateStats()
+    }
+
+    private fun saveToDB(game: Game) {
+        CoroutineScope(Dispatchers.Main).launch {
+            withContext(Dispatchers.IO) {
+                gameRepository.insertGame(game)
+            }
+        }
+    }
+
+    private fun updateStats() {  // Suboptimal method. Could be direct db query
+        var wins = 0
+        var losses = 0
+        var draws = 0
+
+        CoroutineScope(Dispatchers.Main).launch {
+            val games = withContext(Dispatchers.IO) {
+                gameRepository.getAllGames()
+            }
+
+            for (pastGame in games) {
+                when(pastGame.winner){
+                    "user" -> wins++
+                    "computer" -> losses++
+                    else -> draws++
+                }
+            }
+            tvStats.text = getString(R.string.tvStats, wins, losses, draws)
         }
     }
 
