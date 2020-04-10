@@ -84,7 +84,7 @@ class HistoryActivity : AppCompatActivity() {
         }
     }
 
-    override fun onSupportNavigateUp(): Boolean {  // Makes back button work! TODO: Fix back button clearing database.
+    override fun onSupportNavigateUp(): Boolean {
         finish()
         return true
     }
