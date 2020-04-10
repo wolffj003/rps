@@ -55,6 +55,9 @@ class MainActivity : AppCompatActivity() {
                 gameRepository.insertGame(game)
             }
         }
+
+        // TODO: Update all time stats
+
     }
 
     private fun computerMove(): Int {
